@@ -41,3 +41,19 @@ class AnimalShelter:
         except PyMongoError as e:
             print("Read error:", e)
             return []
+        
+    def update_documents(self, query, new_values):
+        try:
+            result = self.collection.update_many(query, {'$set': new_values})
+            return result.modified_count
+        except Exception as e:
+            print(f"Update error: {e}")
+            return 0
+
+    def delete_documents(self, query):
+        try:
+            result = self.collection.delete_many(query)
+            return result.deleted_count
+        except Exception as e:
+            print(f"Delete error: {e}")
+            return 0
